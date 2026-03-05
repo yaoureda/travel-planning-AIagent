@@ -1,5 +1,6 @@
 import json
 from langchain_core.prompts import ChatPromptTemplate, FewShotChatMessagePromptTemplate
+from .config import model
 
 # 3. Define your teaching examples list with input/output pairs
 #    - Each example should show a product description as input
@@ -60,3 +61,17 @@ final_template = ChatPromptTemplate.from_messages(
         ("human", "{input}")
     ]
 )
+
+# Running tests
+def run_tests():
+    chain = final_template | model
+
+    test_descriptions = [
+        "I want to travel from Rome to Amsterdam from 2026-09-01 to 2026-09-05. I have a budget of $800.",
+        "Book a hotel in Sydney for 5 nights starting from 2026-10-01. I am from Toronto. My budget is $2000.",
+        "Looking for accommodation in Madrid from 2026-11-10 to 2026-11-15. I am from Berlin. My budget is $900."
+    ]
+    for description in test_descriptions:
+        result = chain.invoke({"input": description})
+        print(f"Input: {description}")
+        print("Output:", json.loads(result.content))
