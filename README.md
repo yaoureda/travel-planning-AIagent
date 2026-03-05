@@ -52,7 +52,7 @@ pip install -r requirements.txt
 
 5. Run the streamlit app:
 ```bash
-streamlit run app/st_app.py
+python -m streamlit run app/st_app.py
 ```
 
 Or run the main.py file:
