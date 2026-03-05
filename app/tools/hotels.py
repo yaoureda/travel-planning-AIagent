@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from langchain.tools import tool
 
-from extractor import extract_travel_info
+from ..extractor import extract_travel_info
 
 # hotel tool
 # Hotel search tool

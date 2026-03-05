@@ -1,8 +1,8 @@
+
 from pydantic import BaseModel, Field
 from langchain.tools import tool
 
-from extractor import extract_travel_info
-from main import calculate_nights
+from ..extractor import extract_travel_info
 
 # budget tool
 # Trip cost estimation tool

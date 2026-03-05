@@ -1,6 +1,6 @@
 import json
-from config import model
-from prompts import final_template
+from .config import model
+from .prompts import final_template
 
 chain = final_template | model
 

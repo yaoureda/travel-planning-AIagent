@@ -1,12 +1,11 @@
-from agent import agent
-from extractor import extract_travel_info
+from .agent import agent
+from .extractor import extract_travel_info
 from datetime import datetime
 
 def calculate_nights(check_in, check_out):
     start = datetime.strptime(check_in, "%Y-%m-%d")
     end = datetime.strptime(check_out, "%Y-%m-%d")
     return (end - start).days
-
 
 def plan_trip(user_query: str):
 
