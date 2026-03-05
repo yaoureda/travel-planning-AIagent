@@ -1,32 +1,52 @@
 from pydantic import BaseModel, Field
 from langchain.tools import tool
+from serpapi import GoogleSearch
+from ..config import SERPAPI_KEY
 
-# Hotel search tool
+
 class HotelSearchInput(BaseModel):
-    """Input for hotel search."""
     destination: str = Field(description="City where the hotel is located")
-    check_in: str = Field(description="Check-in date in YYYY-MM-DD format")
-    check_out: str = Field(description="Check-out date in YYYY-MM-DD format")
+    check_in: str = Field(description="Check-in date YYYY-MM-DD")
+    check_out: str = Field(description="Check-out date YYYY-MM-DD")
 
-@tool(args_schema=HotelSearchInput, description="Search for available hotels in a city for given dates")
+
+@tool(args_schema=HotelSearchInput)
 def search_hotels(destination: str, check_in: str, check_out: str) -> str:
-    """Search for hotels in a given city for the specified date range."""
+    """Search hotels using Google Hotels."""
 
-    # Mock hotel database
-    hotel_data = [
-        {"destination": "Barcelona", "hotel": "Hotel Barcelona Center", "price_per_night": 110, "rating": 4.3},
-        {"destination": "Barcelona", "hotel": "Hostal BCN Ramblas", "price_per_night": 70, "rating": 4.0},
-        {"destination": "Amsterdam", "hotel": "Amsterdam Canal Hotel", "price_per_night": 130, "rating": 4.5},
-        {"destination": "Sydney", "hotel": "Sydney Harbour Hotel", "price_per_night": 180, "rating": 4.6},
-        {"destination": "Madrid", "hotel": "Madrid Central Hotel", "price_per_night": 95, "rating": 4.2}
-    ]
+    try:
+        params = {
+            "engine": "google_hotels",
+            "q": destination,
+            "check_in_date": check_in,
+            "check_out_date": check_out,
+            "adults": 1,
+            "currency": "EUR",
+            "hl": "en",
+            "api_key": SERPAPI_KEY
+        }
 
-    results = [
-        f'{hotel["hotel"]} in {destination}: ${hotel["price_per_night"]}/night (rating {hotel["rating"]})'
-        for hotel in hotel_data if hotel["destination"].lower() == destination.lower()
-    ]
+        search = GoogleSearch(params)
+        results = search.get_dict()
 
-    if not results:
-        return f"No hotels found in {destination}."
+        hotels = results.get("properties", [])
 
-    return f"Hotels available in {destination} from {check_in} to {check_out}:\n" + "\n".join(results)
+        if not hotels:
+            return f"No hotels found in {destination}"
+
+        output = []
+
+        for hotel in hotels[:5]:
+            name = hotel.get("name", "Unknown hotel")
+            price = hotel.get("rate_per_night", {}).get("lowest", "N/A")
+            rating = hotel.get("overall_rating", "N/A")
+            location = hotel.get("address", "")
+
+            output.append(
+                f"{name}\n⭐ Rating: {rating}\n💰 Price: {price}\n📍 {location}\n"
+            )
+
+        return f"Top hotels in {destination}:\n\n" + "\n".join(output)
+
+    except Exception as e:
+        return f"Hotel search error: {str(e)}"

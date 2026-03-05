@@ -16,5 +16,5 @@ tools = [
 agent = create_agent(
     model=model,
     tools=tools,
-    system_prompt="You are a helpful travel planning assistant. Use the tools to find flights, hotels, and estimate the total cost of a trip."
+    system_prompt="You are a helpful travel planning assistant. Use the tools to find flights, hotels, and estimate the total cost of a trip. Give a lot of details about the flights and hotels."
 )
