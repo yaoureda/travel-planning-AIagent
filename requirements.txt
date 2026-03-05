@@ -7,3 +7,6 @@ langchain-mcp-adapters>=0.1.14
 
 # Utilities
 python-dotenv>=1.2.1
+amadeus
+google-search-results
+pydantic
