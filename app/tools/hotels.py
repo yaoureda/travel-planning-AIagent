@@ -15,11 +15,10 @@ class HotelSearchInput(BaseModel):
     rooms: int | None = Field(default=None, description="Number of hotel rooms")
 
     @model_validator(mode="after")
-    def default_rooms_to_adults(cls, model):
-        """If rooms not specified, default to number of adults."""
-        if model.rooms is None:
-            model.rooms = model.adults
-        return model
+    def default_rooms_to_adults(self):
+        if self.rooms is None:
+            self.rooms = self.adults
+        return self
 
 
 @tool(args_schema=HotelSearchInput)
