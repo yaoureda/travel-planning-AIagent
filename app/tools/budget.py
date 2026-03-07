@@ -1,47 +1,61 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from langchain.tools import tool
 
 """
-This file defines the trip cost estimation tool that calculates the total cost of a trip based on flight and hotel prices, and compares it to the user's budget.
+This file defines the budget estimation tool that calculates the total cost of a trip.
 """
-
-# Trip cost estimation tool including round-trip flight
+# Trip cost estimation input
 class TripCostInput(BaseModel):
-    """Input for estimating the total trip cost (round-trip flights included)."""
-
-    departure_flight_price: float = Field(description="Price of the departure flight")
-    return_flight_price: float = Field(description="Price of the return flight")
-    hotel_price_per_night: float = Field(description="Price of the hotel per night")
+    """Input for estimating the total trip cost including flights and hotel."""
+    departure_flight_price: float = Field(description="Price of the departure flight per traveler")
+    return_flight_price: float = Field(description="Price of the return flight per traveler")
+    hotel_price_per_night: float = Field(description="Price of the hotel per night per room")
     nights: int = Field(description="Number of nights for the hotel stay")
+    adults: int = Field(default=1, description="Number of adult travelers (optional)")
+    children: int = Field(default=0, description="Number of children (optional)")
+    infants: int = Field(default=0, description="Number of infants (optional)")
+    rooms: int = Field(default=None, description="Number of hotel rooms")
     budget: float = Field(description="User's total travel budget")
 
+    @model_validator(mode="after")
+    def default_rooms_to_adults(cls, model):
+        """If rooms not specified, default to number of adults."""
+        if model.rooms is None:
+            model.rooms = model.adults
+        return model
 
-@tool(args_schema=TripCostInput, description="Estimate the total trip cost including return flight")
+
+# Trip cost estimation tool
+@tool(args_schema=TripCostInput, description="Estimate total trip cost including flights and hotel for all travelers")
 def estimate_trip_cost(
     departure_flight_price: float,
     return_flight_price: float,
     hotel_price_per_night: float,
     nights: int,
-    budget: float
+    adults: int = 1,
+    children: int = 0,
+    infants: int = 0,
+    rooms: int = None,
+    budget: float = 0.0
 ) -> str:
-    """Estimate the total cost of the trip including departure and return flights and hotel stay."""
+    """Estimate the total cost including all travelers and rooms."""
+    if rooms is None:
+        rooms = adults
 
-    flight_total = departure_flight_price + return_flight_price
-    hotel_total = hotel_price_per_night * nights
+    num_travelers = adults + children + infants
+    flight_total = (departure_flight_price + return_flight_price) * num_travelers
+    hotel_total = hotel_price_per_night * nights * rooms
     total_cost = flight_total + hotel_total
 
-    if total_cost <= budget:
-        status = "within budget"
-    else:
-        status = "over budget"
+    status = "within budget" if total_cost <= budget else "over budget"
 
     print("Using Budget Estimation Tool")
 
     return (
         f"Estimated trip cost:\n"
-        f"Departure flight: ${departure_flight_price}\n"
-        f"Return flight: ${return_flight_price}\n"
-        f"Hotel: ${hotel_price_per_night} x {nights} nights = ${hotel_total}\n"
+        f"Departure flight: ${departure_flight_price} x {num_travelers} travelers = ${departure_flight_price * num_travelers}\n"
+        f"Return flight: ${return_flight_price} x {num_travelers} travelers = ${return_flight_price * num_travelers}\n"
+        f"Hotel: ${hotel_price_per_night} x {nights} nights x {rooms} room(s) = ${hotel_total}\n"
         f"Total cost: ${total_cost}\n"
         f"Budget: ${budget}\n"
         f"Status: The trip is {status}."

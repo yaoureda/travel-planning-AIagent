@@ -13,10 +13,21 @@ class FlightSearchInput(BaseModel):
     destination: str = Field(description="IATA code of destination city (ex: BCN)")
     departure_date: str = Field(description="Departure date in YYYY-MM-DD format")
     return_date: str = Field(description="Return date in YYYY-MM-DD format")
+    adults: int = Field(default=1, description="Number of adult travelers (optional)")
+    children: int = Field(default=0, description="Number of children (optional)")
+    infants: int = Field(default=0, description="Number of infants (optional)")
 
 
 @tool(args_schema=FlightSearchInput, description="Search for available round-trip flights using Amadeus API")
-def search_flights(origin: str, destination: str, departure_date: str, return_date: str) -> str:
+def search_flights(
+    origin: str,
+    destination: str,
+    departure_date: str,
+    return_date: str,
+    adults: int = 1,
+    children: int = 0,
+    infants: int = 0
+) -> str:
     """Search for round-trip flights between two cities using Amadeus."""
 
     try:
@@ -26,7 +37,9 @@ def search_flights(origin: str, destination: str, departure_date: str, return_da
             destinationLocationCode=destination,
             departureDate=departure_date,
             returnDate=return_date,
-            adults=1,
+            adults=adults,
+            children=children,
+            infants=infants,
             max=5
         )
 

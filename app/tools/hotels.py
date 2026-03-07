@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from langchain.tools import tool
 from serpapi import GoogleSearch
 from ..config import SERPAPI_KEY
@@ -11,19 +11,38 @@ class HotelSearchInput(BaseModel):
     destination: str = Field(description="City where the hotel is located")
     check_in: str = Field(description="Check-in date YYYY-MM-DD")
     check_out: str = Field(description="Check-out date YYYY-MM-DD")
+    adults: int = Field(default=1, description="Number of adults (optional)")
+    rooms: int = Field(default=None, description="Number of hotel rooms")
+
+    @model_validator(mode="after")
+    def default_rooms_to_adults(cls, model):
+        """If rooms not specified, default to number of adults."""
+        if model.rooms is None:
+            model.rooms = model.adults
+        return model
 
 
 @tool(args_schema=HotelSearchInput)
-def search_hotels(destination: str, check_in: str, check_out: str) -> str:
+def search_hotels(
+    destination: str,
+    check_in: str,
+    check_out: str,
+    adults: int = 1,
+    rooms: int = None
+) -> str:
     """Search hotels using Google Hotels."""
 
     try:
+        if rooms is None:
+            rooms = adults
+            
         params = {
             "engine": "google_hotels",
             "q": destination,
             "check_in_date": check_in,
             "check_out_date": check_out,
-            "adults": 1,
+            "adults": adults,
+            "rooms": rooms,
             "currency": "EUR",
             "hl": "en",
             "api_key": SERPAPI_KEY
