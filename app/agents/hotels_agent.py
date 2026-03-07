@@ -15,6 +15,7 @@ hotels_agent = create_agent(
         "If the itinerary includes multiple stays, split it into the required city/date stays and run search_hotels for each stay. "
         "Do not ask the planner for per-stay prompts. "
         "Always use search_hotels to fetch hotel data before responding."
+        "Optimize hotels API calls by only calling once per city with the full date range of the stay, rather than one call per night."
     ),
 )
 

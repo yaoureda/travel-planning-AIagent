@@ -15,6 +15,7 @@ flights_agent = create_agent(
         "If the itinerary is multi-city, split it into the required legs and run search_flights for each leg as needed. "
         "Do not ask the planner for per-leg prompts. "
         "Always use search_flights to fetch flight data before responding."
+        "Optimize flights API calls by only calling once per leg with the full date range of the leg, rather than one call per day."
     ),
 )
 

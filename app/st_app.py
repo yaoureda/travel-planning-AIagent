@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+
+# Add repo root to sys.path so `app` package is resolvable under Streamlit.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import streamlit as st
 from app.agents.planner_agent import agent
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage

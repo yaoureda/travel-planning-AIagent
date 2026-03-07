@@ -47,13 +47,14 @@ def search_hotels(
             "hl": "en",
             "api_key": SERPAPI_KEY
         }
-
+        print(f"Searching hotels in {destination} for check-in on {check_in} and check-out on {check_out} for {adults} adults and {rooms} rooms.")
         search = GoogleSearch(params)
         results = search.get_dict()
 
         hotels = results.get("properties", [])
 
         if not hotels:
+            print("No hotels found")
             return f"No hotels found in {destination}"
 
         output = []
