@@ -50,9 +50,7 @@ def extract_travel(message: str) -> str:
     TripExtraction fields, and returns JSON.
     """
     try:
-        # structured_llm should be your LLM wrapped for structured output
-        # Example: structured_llm = model.with_structured_output(TripExtraction)
-        trip = structured_llm.invoke(message)  # returns TripExtraction model
+        trip = structured_llm.invoke(message) 
         print("Using Travel Extraction Tool")
         return json.dumps(trip.dict())
     except Exception as e:
