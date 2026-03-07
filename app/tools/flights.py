@@ -12,7 +12,7 @@ class FlightSearchInput(BaseModel):
     origin: str = Field(description="IATA code of departure city (ex: PAR)")
     destination: str = Field(description="IATA code of destination city (ex: BCN)")
     departure_date: str = Field(description="Departure date in YYYY-MM-DD format")
-    return_date: str = Field(default=None, description="Return date in YYYY-MM-DD format. Omit for one-way flights.")
+    return_date: str | None = Field(default=None, description="Return date in YYYY-MM-DD format. Omit for one-way flights.")
     adults: int = Field(default=1, description="Number of adult travelers (optional)")
     children: int = Field(default=0, description="Number of children (optional)")
     infants: int = Field(default=0, description="Number of infants (optional)")
@@ -23,7 +23,7 @@ def search_flights(
     origin: str,
     destination: str,
     departure_date: str,
-    return_date: str = None,
+    return_date: str | None = None,
     adults: int = 1,
     children: int = 0,
     infants: int = 0
