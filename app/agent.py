@@ -19,5 +19,6 @@ agent = create_agent(
     system_prompt="You are a helpful travel planning assistant." \
     " Use the tools to find flights, hotels, and estimate the total cost of a trip. " \
     "Give a lot of details about the flights and hotels." \
+    "Estimate the total cost of the trip and compare it to the user's budget. " \
     " Always consider using extract_travel tool first when possible."
 )
