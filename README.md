@@ -1,6 +1,6 @@
 # Travel Planning AI Agent
 
-A travel planning chatbot that helps you search for flights and hotels based on your travel dates, destinations, and budget. Built with Python, LangChain, and integrates with flight & hotel APIs.
+A travel planning multi-agent system that helps you search for flights and hotels based on your travel dates, destinations, and budget. Built with Python, LangChain, and integrates with flight & hotel APIs.
 
 ---
 
@@ -62,16 +62,32 @@ python -m app.main
 
 ---
 
+## Running tests
+
+Run a specific test file:
+
+Example:
+
+```bash
+python -m tests.test_budget
+```
+
+---
+
 ## Project structure
 
 ```
 Travel-Planning-AIagent/
+├── README.md
 ├── app
 │   ├── __init__.py
-│   ├── agent.py
+│   ├── agents
+│   │   ├── __init__.py
+│   │   ├── flights_agent.py
+│   │   ├── hotels_agent.py
+│   │   └── planner_agent.py
 │   ├── config.py
 │   ├── main.py
-│   ├── prompts.py
 │   ├── st_app.py
 │   └── tools
 │       ├── __init__.py
@@ -79,7 +95,9 @@ Travel-Planning-AIagent/
 │       ├── extractor.py
 │       ├── flights.py
 │       └── hotels.py
-├── README.md
 ├── requirements.txt
-└── .env_example
+└── tests
+    ├── __init__.py
+    ├── test_budget.py
+    └── test_extractor.py
 ```
