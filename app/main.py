@@ -1,14 +1,18 @@
 from .agent import agent
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
+"""
+A way to have a conversation with the agent in the terminal. 
+Tap "quit" to end it.
+"""
 
 def plan_trip():
     """
     Plan a trip given a user's natural language query.
-    The agent now decides when to call the extractor, flights, hotels, and budget tools.
+    The agent decides when to call the extractor, flights, hotels, and budget tools.
     """
-    print("🤖 Chatbot: Hello! I'm a travel planning assistant. You can ask me to plan trips for you.")
-    # 4. Initialize conversation history list with a SystemMessage for personality
+    print("🤖 AI: Hello! I'm a travel planning assistant. You can ask me to plan trips for you.")
+    # Initialize conversation history list with a SystemMessage for personality
     messages = [
         SystemMessage(content="You are a helpful travel planning assistant. Use the tools to find flights, hotels, and estimate the total cost of a trip."),
     ]
@@ -16,13 +20,13 @@ def plan_trip():
     human_message = str(input("You:"))
     messages.append(HumanMessage(content=human_message))
 
+    # Keep the conversation going until the user types "quit"
     while messages[-1].content.lower() != "quit":
 
         response = agent.invoke({"messages": messages})
-        # Depending on your LangChain version:
-        # response could be a dict with 'messages' or a single AIMessage-like object
-        print(f"\n🤖 AI: {response['messages'][-1].content if 'messages' in response else response.content}")
-        messages.append(AIMessage(content=str(response['messages'][-1].content if 'messages' in response else response.content)))
+
+        print(f"\n🤖 AI: {response['messages'][-1].content}")
+        messages.append(AIMessage(content=str(response['messages'][-1].content)))
 
         human_message = str(input("You:"))
         messages.append(HumanMessage(content=human_message))
@@ -31,5 +35,5 @@ def plan_trip():
 
 
 if __name__ == "__main__":
-    #query = "I want to travel from Paris to Barcelona from 2026-06-01 to 2026-06-05. I have a budget of $1000."
+    #Example query = "I want to travel from Paris to Barcelona from 2026-06-01 to 2026-06-05. I have a budget of $1000."
     plan_trip()

@@ -3,8 +3,11 @@ from langchain.tools import tool
 from amadeus import ResponseError
 from ..config import amadeus
 
+"""
+This file defines the flight search tool that uses the Amadeus API to find available round-trip flights based on user input.
+"""
 
-# Input obligatoire pour aller-retour
+# Define input schema
 class FlightSearchInput(BaseModel):
     origin: str = Field(description="IATA code of departure city (ex: PAR)")
     destination: str = Field(description="IATA code of destination city (ex: BCN)")
@@ -17,6 +20,7 @@ def search_flights(origin: str, destination: str, departure_date: str, return_da
     """Search for round-trip flights between two cities using Amadeus."""
 
     try:
+        # Call Amadeus API to search for flight offers
         response = amadeus.shopping.flight_offers_search.get(
             originLocationCode=origin,
             destinationLocationCode=destination,
@@ -31,6 +35,7 @@ def search_flights(origin: str, destination: str, departure_date: str, return_da
         if not flights:
             return f"No flights found from {origin} to {destination} between {departure_date} and {return_date}"
 
+        # Format the flight information into a readable string
         results = []
 
         for flight in flights:

@@ -1,7 +1,9 @@
 from pydantic import BaseModel, Field
 from langchain.tools import tool
-from datetime import datetime
 
+"""
+This file defines the trip cost estimation tool that calculates the total cost of a trip based on flight and hotel prices, and compares it to the user's budget.
+"""
 
 # Trip cost estimation tool including round-trip flight
 class TripCostInput(BaseModel):

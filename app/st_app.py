@@ -2,9 +2,9 @@ import streamlit as st
 from app.agent import agent
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
+# A way to have a conversation with the agent on a Streamlit app.
 
 st.set_page_config(page_title="Travel Planner", page_icon="✈️")
-
 st.title("✈️ AI Travel Planner")
 
 # Initialize session state for messages
@@ -25,7 +25,7 @@ for msg in st.session_state.messages[1:]:
             st.write(msg.content)
 
 # Chat input
-user_input = st.chat_input("Ask me to plan your trip...")
+user_input = st.chat_input("Ask me to plan your trip")
 
 if user_input:
 
@@ -39,13 +39,10 @@ if user_input:
     with st.spinner("Planning your trip..."):
         response = agent.invoke({"messages": st.session_state.messages})
 
+    # Display AI response
     ai_text = (
         response["messages"][-1].content
-        if isinstance(response, dict)
-        else response.content
     )
-
-    # Display AI response
     with st.chat_message("assistant"):
         st.write(ai_text)
 

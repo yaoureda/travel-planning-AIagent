@@ -2,9 +2,13 @@ import json
 from langchain_core.prompts import ChatPromptTemplate, FewShotChatMessagePromptTemplate
 from .config import model
 
-# 3. Define your teaching examples list with input/output pairs
-#    - Each example should show a product description as input
-#    - And the corresponding JSON format as output (use json.dumps for formatting)
+"""
+This file defines the few-shot prompting template for the travel planning agent.
+"""
+
+# Defining teaching examples list with input/output pairs
+#    - Each example shows a travel query as input
+#    - And the corresponding JSON format as output (using json.dumps for formatting)
 examples = [
     {
         "input": "I want to travel from Paris to Barcelona from 2026-06-01 to 2026-06-05. I have a budget of $1000.",
@@ -38,7 +42,7 @@ examples = [
     }
 ]
 
-# 4. Create an example template using ChatPromptTemplate.from_messages
+# Creating an example template using ChatPromptTemplate.from_messages
 #    with ("human", "{input}") and ("ai", "{output}")
 example_template = ChatPromptTemplate.from_messages(
     [
@@ -47,13 +51,13 @@ example_template = ChatPromptTemplate.from_messages(
     ]
 )
 
-# 5. Create a FewShotChatMessagePromptTemplate with your examples
+# 5. Creating a FewShotChatMessagePromptTemplate with the examples
 few_shot_template = FewShotChatMessagePromptTemplate(
     examples=examples,
     example_prompt=example_template,
 )
 
-# 6. Build a final prompt that includes the few-shot template
+# 6. Building a final prompt that includes the few-shot template
 final_template = ChatPromptTemplate.from_messages(
     [
         ("system", "You are a helpful assistant that helps users plan their travels."),

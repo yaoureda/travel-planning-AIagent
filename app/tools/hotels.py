@@ -3,6 +3,9 @@ from langchain.tools import tool
 from serpapi import GoogleSearch
 from ..config import SERPAPI_KEY
 
+"""
+This file defines the hotel search tool that uses SerpAPI to find hotels based on user input.
+"""
 
 class HotelSearchInput(BaseModel):
     destination: str = Field(description="City where the hotel is located")
