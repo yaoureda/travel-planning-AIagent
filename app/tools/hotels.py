@@ -12,7 +12,7 @@ class HotelSearchInput(BaseModel):
     check_in: str = Field(description="Check-in date YYYY-MM-DD")
     check_out: str = Field(description="Check-out date YYYY-MM-DD")
     adults: int = Field(default=1, description="Number of adults (optional)")
-    rooms: int = Field(default=None, description="Number of hotel rooms")
+    rooms: int | None = Field(default=None, description="Number of hotel rooms")
 
     @model_validator(mode="after")
     def default_rooms_to_adults(cls, model):
@@ -28,7 +28,7 @@ def search_hotels(
     check_in: str,
     check_out: str,
     adults: int = 1,
-    rooms: int = None
+    rooms: int | None = None
 ) -> str:
     """Search hotels using Google Hotels."""
 

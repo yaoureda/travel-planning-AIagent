@@ -8,6 +8,7 @@ This file defines a tool that formats travel details into JSON after validating 
 
 # Define the structure using Pydantic model
 class TripExtraction(BaseModel):
+    """Schema for extracting trip details. Validates and formats the input data."""
     origin: str = Field(description="Departure city")
     destination: str = Field(description="Destination city")
     departure_date: str = Field(description="Departure date in YYYY-MM-DD format")
@@ -15,7 +16,7 @@ class TripExtraction(BaseModel):
     adults: int = Field(default=1, description="Number of adult travelers (optional)")
     children: int = Field(default=0, description="Number of children (optional)")
     infants: int = Field(default=0, description="Number of infants (optional)")
-    rooms: int = Field(default=None, description="Number of hotel rooms")
+    rooms: int | None = Field(default=None, description="Number of hotel rooms")
 
 
     @model_validator(mode="after")
@@ -43,7 +44,7 @@ def extract_travel(
     adults: int = 1,
     children: int = 0,
     infants: int = 0,
-    rooms: int = None
+    rooms: int | None = None
 ) -> str:
     """
     LangChain structured tool for extracting trip info.

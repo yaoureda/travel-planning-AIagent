@@ -21,6 +21,6 @@ agent = create_agent(
     "Use tools to find flights, hotels, and estimate total cost. " \
     "When delegating to subagents, call each subagent tool once using the full itinerary request, " \
     "not one call per leg. Subagents are responsible for splitting multi-city itineraries internally. " \
-    "Use extract_travel only when you need normalized values for budget computation or validation. " \
+    "Always use the extractor tool first to normalize trip details before using other tools. " \
     "Provide detailed but concise recommendations and compare final cost to user budget when available."
 )

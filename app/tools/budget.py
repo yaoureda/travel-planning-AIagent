@@ -14,7 +14,7 @@ class TripCostInput(BaseModel):
     adults: int = Field(default=1, description="Number of adult travelers (optional)")
     children: int = Field(default=0, description="Number of children (optional)")
     infants: int = Field(default=0, description="Number of infants (optional)")
-    rooms: int = Field(default=None, description="Number of hotel rooms")
+    rooms: int | None = Field(default=None, description="Number of hotel rooms")
     budget: float = Field(description="User's total travel budget")
 
     @model_validator(mode="after")
@@ -35,7 +35,7 @@ def estimate_trip_cost(
     adults: int = 1,
     children: int = 0,
     infants: int = 0,
-    rooms: int = None,
+    rooms: int | None = None,
     budget: float = 0.0
 ) -> str:
     """Estimate the total cost including all travelers and rooms."""
