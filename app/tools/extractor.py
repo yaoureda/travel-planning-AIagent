@@ -1,23 +1,30 @@
 import json
 from pydantic import BaseModel, Field, model_validator
 from langchain.tools import tool
+from ..config import model
+import warnings
+
+# Ignore Pydantic serialization warnings
+warnings.filterwarnings(
+    "ignore",
+    category=UserWarning,
+    message=r"Pydantic serializer warnings:.*"
+)
 
 """
-This file defines a tool that formats travel details into JSON after validating them.
+Travel extractor tool: takes a user query and returns structured trip details.
 """
 
-# Define the structure using Pydantic model
+# Define the Pydantic schema for the extracted trip
 class TripExtraction(BaseModel):
-    """Schema for extracting trip details. Validates and formats the input data."""
     origin: str = Field(description="Departure city")
     destination: str = Field(description="Destination city")
     departure_date: str = Field(description="Departure date in YYYY-MM-DD format")
     return_date: str = Field(description="Return date in YYYY-MM-DD format")
-    adults: int = Field(default=1, description="Number of adult travelers (optional)")
-    children: int = Field(default=0, description="Number of children (optional)")
-    infants: int = Field(default=0, description="Number of infants (optional)")
+    adults: int = Field(default=1, description="Number of adult travelers")
+    children: int = Field(default=0, description="Number of children")
+    infants: int = Field(default=0, description="Number of infants")
     rooms: int | None = Field(default=None, description="Number of hotel rooms")
-
 
     @model_validator(mode="after")
     def default_rooms_to_adults(cls, model):
@@ -25,46 +32,28 @@ class TripExtraction(BaseModel):
         if model.rooms is None:
             model.rooms = model.adults
         return model
+    
+# Wrap the LLM with structured output capabilities for TripExtraction
+structured_llm = model.with_structured_output(TripExtraction)
 
-
-# Define the extractor tool
+# Define the tool
 @tool(
-    args_schema=TripExtraction,
     description=(
-        "Extract trip details. "
-        "Returns JSON string with origin, destination, departure_date, return_date, "
+        "Extracts trip details from a user message. "
+        "Returns JSON with origin, destination, departure_date, return_date, "
         "adults, children, infants, and rooms."
     )
 )
-def extract_travel(
-    origin: str,
-    destination: str,
-    departure_date: str,
-    return_date: str,
-    adults: int = 1,
-    children: int = 0,
-    infants: int = 0,
-    rooms: int | None = None
-) -> str:
+def extract_travel(message: str) -> str:
     """
-    LangChain structured tool for extracting trip info.
-    Returns JSON string.
+    Accepts a raw user message, uses a structured LLM to parse it into
+    TripExtraction fields, and returns JSON.
     """
     try:
-        if rooms is None:
-            rooms = adults
-
+        # structured_llm should be your LLM wrapped for structured output
+        # Example: structured_llm = model.with_structured_output(TripExtraction)
+        trip = structured_llm.invoke(message)  # returns TripExtraction model
         print("Using Travel Extraction Tool")
-        trip_data = {
-            "origin": origin,
-            "destination": destination,
-            "departure_date": departure_date,
-            "return_date": return_date,
-            "adults": adults,
-            "children": children,
-            "infants": infants,
-            "rooms": rooms
-        }
-        return json.dumps(trip_data)
+        return json.dumps(trip.dict())
     except Exception as e:
         return json.dumps({"error": f"Extraction failed: {str(e)}"})
