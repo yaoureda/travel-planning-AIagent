@@ -48,7 +48,7 @@ def search_hotels(destination: str, check_in: str, check_out: str) -> str:
             output.append(
                 f"{name}\n⭐ Rating: {rating}\n💰 Price: {price}\n📍 {location}\n"
             )
-
+        print("Using Hotel Search Tool")
         return f"Top hotels in {destination}:\n\n" + "\n".join(output)
 
     except Exception as e:

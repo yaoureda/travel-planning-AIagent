@@ -35,6 +35,8 @@ def estimate_trip_cost(
     else:
         status = "over budget"
 
+    print("Using Budget Estimation Tool")
+
     return (
         f"Estimated trip cost:\n"
         f"Departure flight: ${departure_flight_price}\n"

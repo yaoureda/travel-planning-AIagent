@@ -4,7 +4,8 @@ from ..config import model
 from ..prompts import final_template
 
 """
-This file defines the extractor tool that uses a few-shot prompting template to parse natural language travel queries into structured JSON format."""
+This file defines the extractor tool that uses a few-shot prompting template to parse natural language travel queries into structured JSON format.
+"""
 
 # Define input schema
 class ExtractTravelInput(BaseModel):
@@ -19,5 +20,6 @@ def extract_travel(query: str) -> str:
     """Use the few-shot chain to parse a natural language query into structured travel info"""
     chain = final_template | model
     result = chain.invoke({"input": query})
+    print("Using Extractor Tool")
     # Return JSON string
     return result.content

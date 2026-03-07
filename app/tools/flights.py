@@ -70,7 +70,7 @@ Arrival: {ret_arrival}
 Total price: ${price}
 """
             )
-
+        print("Using Flight Search Tool")
         return "Available flights:\n" + "\n".join(results)
 
     except ResponseError as error:
