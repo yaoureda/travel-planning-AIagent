@@ -3,8 +3,7 @@ from pydantic import BaseModel, Field, model_validator
 from langchain.tools import tool
 
 """
-This file defines the extractor tool that uses LangChain's structured tool capabilities to extract trip details from
-user input. It returns a JSON string with the extracted information.
+This file defines a tool that formats travel details into JSON after validating them.
 """
 
 # Define the structure using Pydantic model
@@ -31,7 +30,7 @@ class TripExtraction(BaseModel):
 @tool(
     args_schema=TripExtraction,
     description=(
-        "Extract trip details from a user message. "
+        "Extract trip details. "
         "Returns JSON string with origin, destination, departure_date, return_date, "
         "adults, children, infants, and rooms."
     )
