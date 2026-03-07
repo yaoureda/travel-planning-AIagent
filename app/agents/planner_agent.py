@@ -1,16 +1,16 @@
 from langchain.agents import create_agent
 
-from .config import model
-from .tools.extractor import extract_travel
-from .tools.flights import search_flights
-from .tools.hotels import search_hotels
-from .tools.budget import estimate_trip_cost
+from app.agents import flights_agent, hotels_agent
+
+from ..config import model
+from ..tools.extractor import extract_travel
+from ..tools.budget import estimate_trip_cost
 
 # grouping tools and creating agent
 tools = [
     extract_travel,
-    search_flights,
-    search_hotels,
+    flights_agent,
+    hotels_agent,
     estimate_trip_cost
 ]
 agent = create_agent(

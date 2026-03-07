@@ -1,5 +1,5 @@
 import streamlit as st
-from app.agent import agent
+from app.agents.planner_agent import agent
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 # A way to have a conversation with the agent on a Streamlit app.

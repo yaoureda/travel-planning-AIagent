@@ -68,20 +68,20 @@ def search_flights(
 
             results.append(
                 f"""
-Departure:
-Airline: {dep_airline}
-From {origin} → {destination}
-Departure: {dep_departure}
-Arrival: {dep_arrival}
+                    Departure:
+                    Airline: {dep_airline}
+                    From {origin} → {destination}
+                    Departure: {dep_departure}
+                    Arrival: {dep_arrival}
 
-Return:
-Airline: {ret_airline}
-From {destination} → {origin}
-Departure: {ret_departure}
-Arrival: {ret_arrival}
+                    Return:
+                    Airline: {ret_airline}
+                    From {destination} → {origin}
+                    Departure: {ret_departure}
+                    Arrival: {ret_arrival}
 
-Total price: ${price}
-"""
+                    Total price: ${price}
+                """
             )
         print("Using Flight Search Tool")
         return "Available flights:\n" + "\n".join(results)
