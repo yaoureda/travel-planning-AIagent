@@ -25,13 +25,10 @@ class TripExtraction(BaseModel):
     children: int = Field(default=0, description="Number of children")
     infants: int = Field(default=0, description="Number of infants")
     rooms: int | None = Field(default=None, description="Number of hotel rooms")
-
-    @model_validator(mode="after")
-    def default_rooms_to_adults(cls, model):
-        """If rooms not specified, default to number of adults."""
-        if model.rooms is None:
-            model.rooms = model.adults
-        return model
+    rooms_specified: bool = Field(
+        default=False,
+        description="True if the user explicitly mentioned the number of rooms"
+    )
     
 # Wrap the LLM with structured output capabilities for TripExtraction
 structured_llm = model.with_structured_output(TripExtraction)
@@ -50,8 +47,14 @@ def extract_travel(message: str) -> str:
     TripExtraction fields, and returns JSON.
     """
     try:
-        trip = structured_llm.invoke(message) 
+        trip = structured_llm.invoke(message)
+        dict_trip = trip.dict()
+        
+        # Default rooms to adults if not specified
+        if not dict_trip["rooms_specified"]:
+            dict_trip["rooms"] = dict_trip["adults"]
+
         print("Using Travel Extraction Tool")
-        return json.dumps(trip.dict())
+        return json.dumps(dict_trip)
     except Exception as e:
         return json.dumps({"error": f"Extraction failed: {str(e)}"})
