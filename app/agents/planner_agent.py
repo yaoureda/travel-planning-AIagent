@@ -25,7 +25,7 @@ agent = create_agent(
         "Before using tools, reason through the user's request and make a clear plan for which tools to call with what information. API calls are costly, so be efficient and avoid calling tools multiple times with overlapping information. "
         "Make reasonable assumptions: if no departure city is given, ask only once; "
         "for multi-city trips always search one-way flights between each leg, not round-trips. "
-        "Use extract_travel only when you need structured values for budget estimation. "
+        "Always use the extractor tool first to normalize trip details before using other tools. " \
         "Always compare the final estimated cost to the user's budget and give a clear recommendation."
-    ),
+    )
 )
