@@ -60,6 +60,9 @@ Or run the main.py file:
 python -m app.main
 ```
 
+Example query to ask the chatbot:
+"I want to travel from Paris to Barcelona from 2026-06-01 to 2026-06-05. I have a budget of $1000."
+
 ---
 
 ## Running tests
