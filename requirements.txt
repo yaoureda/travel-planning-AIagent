@@ -11,3 +11,4 @@ amadeus
 google-search-results
 pydantic
 streamlit
+pytest
