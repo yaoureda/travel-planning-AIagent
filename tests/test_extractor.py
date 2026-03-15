@@ -1,7 +1,8 @@
+import pytest
 import json
 from app.tools.extractor import extract_travel
 
-
+# Test cases
 tests = [
     {
         "message": "Trip from Paris to Rome 2026-04-01 to 2026-04-05 for 2 adults",
@@ -17,33 +18,15 @@ tests = [
     }
 ]
 
-
-passed = 0
-
-for i, test in enumerate(tests, 1):
+@pytest.mark.parametrize("test_case", tests)
+def test_extract_travel(test_case):
+    """Test the extract_travel tool with multiple messages."""
+    result_json = extract_travel.invoke({"message": test_case["message"]})
+    
     try:
-        result = json.loads(extract_travel.invoke({"message": test["message"]}))
-
-        success = True
-        for key, value in test["expected"].items():
-            if result.get(key) != value:
-                success = False
-
-        if success:
-            print(f"Test {i}: PASSED")
-            passed += 1
-        else:
-            print(f"Test {i}: FAILED")
-            print("Expected:", test["expected"])
-            print("Got:", result)
-
+        result = json.loads(result_json)
     except Exception as e:
-        print(f"Test {i}: ERROR - {e}")
+        pytest.fail(f"Failed to parse JSON: {e}")
 
-print("\n-----------------------")
-print(f"{passed}/{len(tests)} tests passed")
-
-if passed == len(tests):
-    print("ALL TESTS PASSED")
-else:
-    print("SOME TESTS FAILED")
+    for key, value in test_case["expected"].items():
+        assert result.get(key) == value, f"For message '{test_case['message']}', expected {key}={value} but got {result.get(key)}"
