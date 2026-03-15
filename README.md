@@ -64,12 +64,9 @@ python -m app.main
 
 ## Running tests
 
-Run a specific test file:
-
-Example:
-
+Run :
 ```bash
-python -m tests.test_budget
+pytest
 ```
 
 ---
@@ -99,5 +96,7 @@ Travel-Planning-AIagent/
 └── tests
     ├── __init__.py
     ├── test_budget.py
-    └── test_extractor.py
+    ├── test_extractor.py
+    ├── test_flights.py
+    └── test_hotels.py
 ```
