@@ -1,14 +1,24 @@
-# LangChain packages
-langchain-openai>=1.1.0
-langchain-core>=1.1.0
+# LangChain
 langchain>=1.1.0
+langchain-core>=1.1.0
+langchain-openai>=1.1.0
 langchain-azure-ai>=1.0.4
 langchain-mcp-adapters>=0.1.14
 
+# APIs
+amadeus>=9.0.0
+google-search-results>=2.4.2
+httpx>=0.27.0
+
+# Data validation
+pydantic>=2.6.0
+typing_extensions>=4.10.0
+
 # Utilities
 python-dotenv>=1.2.1
-amadeus
-google-search-results
-pydantic
-streamlit
-pytest
+
+# App
+streamlit>=1.33.0
+
+# Testing
+pytest>=8.0.0
