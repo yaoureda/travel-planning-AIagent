@@ -46,6 +46,7 @@ def search_hotels(
             "hl": "en",
             "api_key": SERPAPI_KEY
         }
+        print(f"Hotel search parameters: {params}")
         print(f"Searching hotels in {destination} for check-in on {check_in} and check-out on {check_out} for {adults} adults and {rooms} rooms.")
         search = GoogleSearch(params)
         results = search.get_dict()
@@ -72,3 +73,26 @@ def search_hotels(
 
     except Exception as e:
         return f"Hotel search error: {str(e)}"
+    
+if __name__ == "__main__":
+    # Example usage for dubugging
+    params = {
+        "engine": "google_hotels",
+        "q": "Barcelona",
+        "check_in_date": "2026-07-01",
+        "check_out_date": "2026-07-05",
+        "adults": 2,
+        "rooms": 1,
+        "currency": "EUR",
+        "hl": "en",
+        "api_key": SERPAPI_KEY
+    }
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    hotels = results.get("properties", [])
+    for hotel in hotels[:5]:
+        name = hotel.get("name", "Unknown hotel")
+        price = hotel.get("rate_per_night", {}).get("lowest", "N/A")
+        rating = hotel.get("overall_rating", "N/A")
+        location = hotel.get("address", "")
+        print(f"{name}\n⭐ Rating: {rating}\n💰 Price: {price}\n📍 {location}\n")

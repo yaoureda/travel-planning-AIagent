@@ -46,7 +46,7 @@ def search_flights(
         )
         if return_date:
             params["returnDate"] = return_date
-
+        print(f"Flight search parameters: {params}")
         response = amadeus.shopping.flight_offers_search.get(**params)
 
         flights = response.data
@@ -93,3 +93,14 @@ def search_flights(
     except ResponseError as error:
         print(f"Error retrieving flights: {error}")
         return f"Error retrieving flights: {error}"
+
+if __name__ == "__main__":
+    # Example usage for debugging
+    response = amadeus.shopping.flight_offers_search.get(
+        originLocationCode='MAD',
+        destinationLocationCode='ATH',
+        departureDate='2026-11-01',
+        children=0,
+        infants=0,
+        adults=1)
+    print(response.data)
