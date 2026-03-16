@@ -23,6 +23,8 @@ cd travel-planning-AIagent
 ```
 
 2. Create a .env file, paste in it the code from .env_example, and fill in this file your personal API keys.
+For amadeus API: https://developers.amadeus.com/signin/external
+For SERPAPI API: https://serpapi.com/
 
 3. Create and activate a virtual environment:
 **On Windows (Command Prompt):**
