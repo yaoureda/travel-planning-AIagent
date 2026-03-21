@@ -9,6 +9,8 @@ A travel planning multi-agent system that helps you search for flights and hotel
 - **Flight search:** Finds round-trip flight options with prices and airlines from amadeus API.
 - **Hotel search:** Retrieves hotels for your travel dates, including price and rating from SERPAPI.
 - **Budget-aware:** Considers your travel budget when suggesting options.
+- **Places-to-visit planning:** Finds top touristic attractions and suggests a visit plan.
+- **Travel duration lookup:** Estimates travel time between places in destination cities using SerpApi.
 - **Interactive Chatbot:** Ask for trips in natural language, get structured results.
 
 ---
@@ -87,6 +89,7 @@ Travel-Planning-AIagent/
 │   │   ├── __init__.py
 │   │   ├── flights_agent.py
 │   │   ├── hotels_agent.py
+│   │   ├── places_agent.py
 │   │   └── planner_agent.py
 │   ├── config.py
 │   ├── main.py
@@ -96,12 +99,16 @@ Travel-Planning-AIagent/
 │       ├── budget.py
 │       ├── extractor.py
 │       ├── flights.py
-│       └── hotels.py
+│       ├── hotels.py
+│       ├── places.py
+│       └── travel_duration.py
 ├── requirements.txt
 └── tests
     ├── __init__.py
     ├── test_budget.py
     ├── test_extractor.py
     ├── test_flights.py
-    └── test_hotels.py
+    ├── test_hotels.py
+    ├── test_places.py
+    └── test_travel_duration.py
 ```
