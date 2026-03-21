@@ -30,11 +30,7 @@ for msg in st.session_state.messages[1:]:
         with st.chat_message("assistant"):
             st.write(msg.content)
 
-# Chat input
-user_input = st.chat_input("Ask me to plan your trip")
-
-if user_input:
-
+def send_request(user_input: str):
     # Display user message
     with st.chat_message("user"):
         st.write(user_input)
@@ -53,3 +49,31 @@ if user_input:
         st.write(ai_text)
 
     st.session_state.messages.append(AIMessage(content=ai_text))
+
+# Chat input
+user_input = st.chat_input("Ask me to plan your trip")
+
+@st.dialog("Request Template")
+def fill_template():
+    st.write("Fill in the template:")
+    origine = st.text_input("Origin...")
+    destination = st.text_input("Destination...")
+    departure_date = st.date_input("Departure date...")
+    return_date = st.date_input("Return date...")
+    duraation = st.text_input("Duration...")
+    budget = st.text_input("Budget...")
+    number_of_travelers = st.text_input("Number of travelers...")
+    if st.button("Submit"):
+        st.rerun()
+        send_request(
+            f"Plan a trip from {origine if origine else 'N/A'} to {destination if destination else 'N/A'} departing on {departure_date if departure_date else 'N/A'} and returning on {return_date if return_date else 'N/A'}. "
+            f"The trip duration is {duraation if duraation else 'N/A'} and the budget is {budget if budget else 'N/A'}. "
+            f"There are {number_of_travelers if number_of_travelers else 'N/A'} travelers."
+        )
+
+with st.sidebar:
+    if st.button("Use Template"):
+        fill_template()
+
+if user_input:
+    send_request(user_input)
