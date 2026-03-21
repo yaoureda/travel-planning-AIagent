@@ -10,8 +10,8 @@ hotels_agent = create_agent(
     model=model,
     tools=[search_hotels],
     system_prompt=(
-        "You are a hotel specialist subagent. "
-        "You receive the full travel request and are responsible for finding hotels. "
+        "You are a hotel specialist subagent. You receive a full travel request and are responsible for finding hotels."
+        "After you receive hotel list from the search_hotels tool, you should pick the best hotels based on price and convenience and return that recommendation with a brief justification. Just as how a human travel agent would. "
         "If the itinerary includes multiple stays, split it into the required city/date stays and run search_hotels for each stay. "
         "Do not ask the planner for per-stay prompts. "
         "Always use search_hotels to fetch hotel data before responding."
