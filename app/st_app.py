@@ -39,7 +39,7 @@ def send_request(user_input: str):
 
     # Call agent
     with st.spinner("Planning your trip..."):
-        response = agent.invoke({"messages": st.session_state.messages})
+        response = agent.invoke({"messages": st.session_state.messages}, config={"recursion_limit": 100})
 
     # Display AI response
     ai_text = (
