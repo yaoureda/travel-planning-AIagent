@@ -30,7 +30,7 @@ def search_touristic_places(destination: str, max_results: int = 5) -> str:
 
         search = GoogleSearch(params)
         results = search.get_dict()
-        sights = results.get("top_sights", [])
+        sights = results.get("local_results", [])
 
         if not sights:
             return f"No touristic places found for {destination}."

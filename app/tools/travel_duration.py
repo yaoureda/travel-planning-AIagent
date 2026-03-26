@@ -41,15 +41,15 @@ def search_travel_duration(origin: str, destination: str, mode: str = "transit")
             return f"No route found from {origin} to {destination} by {normalized_mode}."
 
         best_route = directions[0]
-        duration = best_route.get("duration", "N/A")
+        route_duration = best_route.get("duration", "N/A")
         distance = best_route.get("distance", "N/A")
 
-        duration = time.time() - start
-        print(f"[Tool Timing] search_travel_duration took {duration:.2f}s")
+        time_taken = time.time() - start
+        print(f"[Tool Timing] search_travel_duration took {time_taken:.2f}s")
 
         return (
             f"Estimated travel from {origin} to {destination} by {normalized_mode}:\n"
-            f"Duration: {duration}\n"
+            f"Duration: {route_duration}\n"
             f"Distance: {distance}"
         )
     except Exception as e:
