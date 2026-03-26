@@ -1,3 +1,5 @@
+import os
+
 from langchain_openai import ChatOpenAI
 from typing import Any, Dict
 import re
@@ -7,7 +9,12 @@ _EVAL_LLM = None
 def get_eval_llm():
     global _EVAL_LLM
     if _EVAL_LLM is None:
-        _EVAL_LLM = ChatOpenAI(temperature=0, model="gpt-4o-mini")
+        _EVAL_LLM = ChatOpenAI(
+    model=os.getenv("AI_MODEL"),
+    base_url=os.getenv("AI_ENDPOINT"),
+    api_key=os.getenv("AI_API_KEY"),
+    temperature=0
+)
     return _EVAL_LLM
 
 def _run_custom_eval(llm: ChatOpenAI, system_prompt: str, user_prompt: str) -> Dict[str, Any]:
