@@ -1,3 +1,5 @@
+import time
+
 from pydantic import BaseModel, Field, model_validator
 from langchain.tools import tool
 from serpapi import GoogleSearch
@@ -32,6 +34,7 @@ def search_hotels(
     """Search hotels using Google Hotels."""
 
     try:
+        start = time.time()
         if rooms is None:
             rooms = adults
             
@@ -46,15 +49,15 @@ def search_hotels(
             "hl": "en",
             "api_key": SERPAPI_KEY
         }
-        print(f"Hotel search parameters: {params}")
-        print(f"Searching hotels in {destination} for check-in on {check_in} and check-out on {check_out} for {adults} adults and {rooms} rooms.")
+        #print(f"Hotel search parameters: {params}")
+        #print(f"Searching hotels in {destination} for check-in on {check_in} and check-out on {check_out} for {adults} adults and {rooms} rooms.")
         search = GoogleSearch(params)
         results = search.get_dict()
 
         hotels = results.get("properties", [])
 
         if not hotels:
-            print("No hotels found")
+            # print("No hotels found")
             return f"No hotels found in {destination}"
 
         output = []
@@ -68,7 +71,9 @@ def search_hotels(
             output.append(
                 f"{name}\n⭐ Rating: {rating}\n💰 Price: {price}\n📍 {location}\n"
             )
-        print("Using Hotel Search Tool")
+        #print("Using Hotel Search Tool")
+        duration = time.time() - start
+        print(f"[Tool Timing] search_hotels took {duration:.2f}s")
         return f"Top hotels in {destination}:\n\n" + "\n".join(output)
 
     except Exception as e:
@@ -95,4 +100,4 @@ if __name__ == "__main__":
         price = hotel.get("rate_per_night", {}).get("lowest", "N/A")
         rating = hotel.get("overall_rating", "N/A")
         location = hotel.get("address", "")
-        print(f"{name}\n⭐ Rating: {rating}\n💰 Price: {price}\n📍 {location}\n")
+        #print(f"{name}\n⭐ Rating: {rating}\n💰 Price: {price}\n📍 {location}\n")

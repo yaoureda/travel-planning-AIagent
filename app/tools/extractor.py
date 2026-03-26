@@ -1,4 +1,5 @@
 import json
+import time
 from pydantic import BaseModel, Field, model_validator
 from langchain.tools import tool
 from ..config import model
@@ -47,6 +48,8 @@ def extract_travel(message: str) -> str:
     TripExtraction fields, and returns JSON.
     """
     try:
+        start = time.time()
+        
         trip = structured_llm.invoke(message)
         dict_trip = trip.dict()
         
@@ -54,7 +57,9 @@ def extract_travel(message: str) -> str:
         if not dict_trip["rooms_specified"]:
             dict_trip["rooms"] = dict_trip["adults"]
 
-        print("Using Travel Extraction Tool")
+        duration = time.time() - start
+        print(f"[Tool Timing] extract_travel took {duration:.2f}s")
+
         return json.dumps(dict_trip)
     except Exception as e:
         return json.dumps({"error": f"Extraction failed: {str(e)}"})

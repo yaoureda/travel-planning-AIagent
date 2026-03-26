@@ -1,3 +1,5 @@
+import time
+
 from pydantic import BaseModel, Field
 from langchain.tools import tool
 from langchain.agents import create_agent
@@ -11,12 +13,12 @@ places_agent = create_agent(
     model=model,
     tools=[search_touristic_places, search_travel_duration],
     system_prompt=(
+        "Always use search_touristic_places and search_travel_duration tools before finalizing recommendations."
         "You are a sightseeing specialist subagent. "
         "You receive the full travel request plus selected flight and hotel context from the planner. "
         "First identify the destination city and search for relevant touristic places to visit. "
         "Then estimate travel duration for practical movement between the hotel area and suggested places. "
         "Return a concise place-visit plan with day grouping, ordering, and brief rationale. "
-        "Always use both tools before finalizing recommendations when route context is available."
     ),
 )
 
@@ -36,6 +38,8 @@ class PlacesAgentInput(BaseModel):
     ),
 )
 def call_places_agent(trip_request: str):
-    print("Calling places agent with full trip request")
+    start = time.time()
     result = places_agent.invoke({"messages": [{"role": "user", "content": trip_request}]})
+    duration = time.time() - start
+    print(f"[Tool Timing] call_places_agent took {duration:.2f}s")
     return result["messages"][-1].content

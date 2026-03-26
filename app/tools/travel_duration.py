@@ -1,3 +1,5 @@
+import time
+
 from pydantic import BaseModel, Field
 from langchain.tools import tool
 from serpapi import GoogleSearch
@@ -16,6 +18,7 @@ def search_travel_duration(origin: str, destination: str, mode: str = "transit")
     """Search travel duration between origin and destination."""
 
     try:
+        start = time.time()
         normalized_mode = mode.lower().strip()
         if normalized_mode not in {"driving", "transit", "walking", "bicycling"}:
             normalized_mode = "transit"
@@ -28,7 +31,7 @@ def search_travel_duration(origin: str, destination: str, mode: str = "transit")
             "hl": "en",
             "api_key": SERPAPI_KEY,
         }
-        print(f"Travel duration parameters: {params}")
+        #print(f"Travel duration parameters: {params}")
 
         search = GoogleSearch(params)
         results = search.get_dict()
@@ -41,10 +44,14 @@ def search_travel_duration(origin: str, destination: str, mode: str = "transit")
         duration = best_route.get("duration", "N/A")
         distance = best_route.get("distance", "N/A")
 
+        duration = time.time() - start
+        print(f"[Tool Timing] search_travel_duration took {duration:.2f}s")
+
         return (
             f"Estimated travel from {origin} to {destination} by {normalized_mode}:\n"
             f"Duration: {duration}\n"
             f"Distance: {distance}"
         )
     except Exception as e:
+        print(f"Error during travel duration search: {str(e)}")
         return f"Travel duration search error: {str(e)}"

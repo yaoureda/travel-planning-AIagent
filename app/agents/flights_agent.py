@@ -1,3 +1,5 @@
+import time
+
 from pydantic import BaseModel, Field
 from langchain.tools import tool
 from langchain.agents import create_agent
@@ -35,6 +37,8 @@ class FlightsAgentInput(BaseModel):
     ),
 )
 def call_flights_agent(trip_request: str):
-    print("Calling flights agent with full trip request")
+    start = time.time()
     result = flights_agent.invoke({"messages": [{"role": "user", "content": trip_request}]})
+    duration = time.time() - start
+    print(f"[Tool Timing] call_flights_agent took {duration:.2f}s")
     return result["messages"][-1].content

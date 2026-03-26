@@ -1,3 +1,5 @@
+import time
+
 from pydantic import BaseModel, Field, model_validator
 from langchain.tools import tool
 
@@ -38,6 +40,7 @@ def estimate_trip_cost(
     budget: float = 0.0
 ) -> str:
     """Estimate the total cost including all travelers and rooms."""
+    start = time.time()
     if rooms is None:
         rooms = adults
 
@@ -48,7 +51,8 @@ def estimate_trip_cost(
 
     status = "within budget" if total_cost <= budget else "over budget"
 
-    print("Using Budget Estimation Tool")
+    duration = time.time() - start
+    print(f"[Tool Timing] estimate_trip_cost took {duration:.2f}s")
 
     return (
         f"Estimated trip cost:\n"

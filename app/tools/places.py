@@ -1,3 +1,5 @@
+import time
+
 from pydantic import BaseModel, Field
 from langchain.tools import tool
 from serpapi import GoogleSearch
@@ -15,6 +17,7 @@ def search_touristic_places(destination: str, max_results: int = 5) -> str:
     """Search popular touristic places in a destination."""
 
     try:
+        start = time.time()
         limit = max(1, min(max_results, 10))
         params = {
             "engine": "google_local",
@@ -23,7 +26,7 @@ def search_touristic_places(destination: str, max_results: int = 5) -> str:
             "hl": "en",
             "api_key": SERPAPI_KEY,
         }
-        print(f"Places search parameters: {params}")
+        #print(f"Places search parameters: {params}")
 
         search = GoogleSearch(params)
         results = search.get_dict()
@@ -44,6 +47,10 @@ def search_touristic_places(destination: str, max_results: int = 5) -> str:
                 f"Description: {description}\n"
             )
 
+        duration = time.time() - start
+        print(f"[Tool Timing] search_touristic_places took {duration:.2f}s")
+
         return f"Top touristic places in {destination}:\n\n" + "\n".join(output)
     except Exception as e:
+        print(f"Error during touristic places search: {str(e)}")
         return f"Touristic places search error: {str(e)}"

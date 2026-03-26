@@ -1,3 +1,5 @@
+import time
+
 from pydantic import BaseModel, Field
 from langchain.tools import tool
 from amadeus import ResponseError
@@ -31,9 +33,10 @@ def search_flights(
     """Search for one-way or round-trip flights between two cities using Amadeus."""
 
     try:
+        start = time.time()
         # Call Amadeus API to search for flight offers
         trip_type = "round-trip" if return_date else "one-way"
-        print(f"Searching {trip_type} flights from {origin} to {destination} departing {departure_date}")
+        #print(f"Searching {trip_type} flights from {origin} to {destination} departing {departure_date}")
 
         params = dict(
             originLocationCode=origin,
@@ -46,13 +49,13 @@ def search_flights(
         )
         if return_date:
             params["returnDate"] = return_date
-        print(f"Flight search parameters: {params}")
+        #print(f"Flight search parameters: {params}")
         response = amadeus.shopping.flight_offers_search.get(**params)
 
         flights = response.data
 
         if not flights:
-            print("No flights found")
+            # print("No flights found")
             date_info = f"departing {departure_date}" + (f" returning {return_date}" if return_date else "")
             return f"No flights found from {origin} to {destination} {date_info}"
 
@@ -87,11 +90,13 @@ def search_flights(
 
             entry += f"Total price: ${price}"
             results.append(entry)
-        print("Using Flight Search Tool")
+        #print("Using Flight Search Tool")
+        duration = time.time() - start
+        print(f"[Tool Timing] search_flights took {duration:.2f}s")
         return "Available flights:\n" + "\n".join(results)
 
     except ResponseError as error:
-        print(f"Error retrieving flights: {error}")
+        #print(f"Error retrieving flights: {error}")
         return f"Error retrieving flights: {error}"
 
 if __name__ == "__main__":
@@ -103,4 +108,4 @@ if __name__ == "__main__":
         children=0,
         infants=0,
         adults=1)
-    print(response.data)
+    #print(response.data)
