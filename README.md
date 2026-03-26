@@ -78,46 +78,38 @@ pytest
 
 ---
 
-## Benchmark Evaluation
+## Agent Evaluation With LangChain Evals
 
-This repository now includes an end-to-end evaluation harness in `evals/` to measure planner quality across curated scenarios.
+This repository includes an end-to-end evaluation harness in `langchain_evals/` to measure the agent's quality, efficiency, and safety across curated scenarios using an LLM-as-a-judge approach.
 
 ### What it evaluates
 
-- Itinerary correctness (field-level constraint and consistency checks)
-- Tool call reliability (usable result rate from captured tool traces)
-- Hallucination rate (unsupported claims vs tool outputs from the same run)
+The evaluation measures three key metrics for each scenario:
+- **Correctness (`evaluate_itinerary_correctness_llm`)**: Evaluates whether the generated itinerary accurately follows the scenario's constraints (e.g., correct dates, locations, within budget).
+- **Faithfulness (`evaluate_faithfulness_llm`)**: Checks for hallucinations by ensuring the agent's final recommendations are consistently supported by the actual outputs returned from the API tools during the execution.
+- **Trajectory Match (`evaluate_trajectory_match`)**: Examines the internal trace of the agent to identify whether it used the expected tools (e.g., flight tools, hotel tools, places tools) efficiently without wasting steps or missing crucial tool calls.
 
-### Scenario set
+### Scenarios
 
-- Default suite: `evals/scenarios_v1.json`
-- Count: 20 scenarios (single-city, multi-city, family, tight budget, ambiguous/missing fields)
+- Default suite: `langchain_evals/scenarios_v1.json`
+- Tests varying complexities: simple single-city plans, multi-city round trips, missing trip parameters (prompting clarification), and tight budgets.
 
-### Run benchmark
-
-```bash
-python -m evals.runner
-```
-
-### Run a quick subset
+### Run evaluation
 
 ```bash
-python -m evals.runner --limit 5
+python -m langchain_evals.run_langchain_evals
 ```
 
 ### Output artifacts
 
-Each run writes two files to `evals/results/`:
-
-- `benchmark_<timestamp>.json` (raw per-scenario outputs + scores)
-- `benchmark_<timestamp>.md` (human-readable report)
-
-The JSON artifact includes captured tool calls and extracted response claims for metric traceability.
+At the end of the evaluation run, summary metrics are printed to the console (showing Average Correctness, Faithfulness, and Trajectory Match). 
+A comprehensive JSON report containing raw per-scenario inputs, expected properties, agent responses, extracted tool traces, and evaluator rationales is saved to:
+- `langchain_evals/eval_report_<timestamp>.json`
 
 ### Notes
 
-- The benchmark invokes live LLM/API calls through the planner agent.
-- Ensure environment variables in `.env` are configured before running.
+- The benchmark runs the complex graph agent and invokes live LLM and API calls. Ensure your `.env` variables are correctly configured.
+- If the agent throws a `GRAPH_RECURSION_LIMIT` error, the execution was likely too complex to resolve within minimal steps. The script overrides the standard limit, giving the agent a recursion depth up to 100 steps.
 
 ---
 
@@ -145,6 +137,15 @@ Travel-Planning-AIagent/
 │       ├── hotels.py
 │       ├── places.py
 │       └── travel_duration.py
+├── evaluation
+│   ├── __init__.py
+│   └── time.py
+├── langchain_evals
+│   ├── __init__.py
+│   ├── evaluators.py
+│   ├── run_langchain_evals.py
+│   ├── scenario_schema.py
+│   └── scenarios_v1.json
 ├── requirements.txt
 └── tests
     ├── __init__.py
