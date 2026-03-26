@@ -146,7 +146,7 @@ def run_langchain_evals():
                 ]
             }
             
-            response = agent.invoke(state)
+            response = agent.invoke(state, config={"recursion_limit": 100})
             messages = response["messages"]
             
             final_answer = _extract_content(messages[-1])
