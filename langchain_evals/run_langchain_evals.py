@@ -188,7 +188,7 @@ def run_langchain_evals():
             expected_tools = getattr(
                 scenario,
                 "expected_tools",
-                ["extract_travel", "call_flights_agent", "call_hotels_agent", "call_places_agent", "estimate_trip_cost"],
+                ["extract_travel", "flights", "hotels", "places", "estimate_trip_cost"],
             )
             
             duration = round(time.perf_counter() - start_time, 2)

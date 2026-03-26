@@ -1,0 +1,76 @@
+{
+  "timestamp": "20260326T224333Z",
+  "total_scenarios": 5,
+  "summary": {
+    "avg_correctness": 0.8,
+    "avg_faithfulness": 0.536,
+    "avg_trajectory": 0.0
+  },
+  "results": [
+    {
+      "scenario_id": "S01_single_city_baseline",
+      "duration_seconds": 82.64,
+      "scores": {
+        "correctness": 1,
+        "faithfulness": 0.67,
+        "trajectory_match": 0
+      },
+      "reasoning": {
+        "correctness_rationale": "SCORE: 1  \nREASONING: The response includes the correct destination (Barcelona), the correct travel dates (2026-06-01 to 2026-06-05), a hotel recommendation (Generator Barcelona), flight options (with departure and arrival times), and a budget verdict indicating that the total estimated cost is within the specified budget of $1200. All required elements are present and accurate, fulfilling the user's request effectively.",
+        "faithfulness_rationale": "Raw Score: 2/3\nSCORE: 2  \nREASONING: The itinerary is mostly grounded in real data, with all flights and hotel information accurately reflecting the tool outputs. However, there is a minor discrepancy in the hotel cost conversion; the total hotel cost is stated as \u20ac290 in the tool outputs but is approximated to $250 in the final response, which does not align with the conversion rate used. The attractions listed are well-known and relevant to the location, but the estimated activities cost is noted as $0, which may imply a lack of planned activities or tickets, potentially leading to an incomplete experience. Overall, the core items are accurate, but the minor discrepancies in pricing and the lack of activity costs prevent a perfect score.",
+        "trajectory_match_rationale": "Mode: subset\nExpected: ['extract_travel', 'call_flights_agent', 'call_hotels_agent', 'call_places_agent', 'estimate_trip_cost']\nActual: ['extract_travel', 'flights', 'hotels', 'estimate_trip_cost', 'places']\nResult: FAILED. Missing required tools: ['call_hotels_agent', 'call_places_agent', 'call_flights_agent']. Extra tools used: ['flights', 'hotels', 'places']."
+      }
+    },
+    {
+      "scenario_id": "S02_single_city_family",
+      "duration_seconds": 47.19,
+      "scores": {
+        "correctness": 1,
+        "faithfulness": 0.67,
+        "trajectory_match": 0
+      },
+      "reasoning": {
+        "correctness_rationale": "SCORE: 1  \nREASONING: The response correctly includes the right destination (Rome), the correct travel dates (2026-07-10 to 2026-07-16), a hotel recommendation (Trevi Fountain Luxury Home), a flight option (Alitalia flight from London to Rome), and a budget verdict indicating that the total estimated cost is within the specified budget of $3,500. All required elements are present and accurate.",
+        "faithfulness_rationale": "Raw Score: 2/3\nSCORE: 2  \nREASONING: The itinerary is mostly grounded in real data, with the flights and hotel accurately reflecting the tool outputs. However, there is a minor discrepancy in the hotel price conversion; the hotel cost is stated as \u20ac1,380, which is approximately $1,500 in the response, but the actual conversion may vary slightly based on current exchange rates. Additionally, the estimated activities cost of $596 is not directly supported by the tool outputs, which only provided flight and hotel costs. Overall, the core items are accurate, but the minor discrepancies prevent a perfect score.",
+        "trajectory_match_rationale": "Mode: subset\nExpected: ['extract_travel', 'call_flights_agent', 'call_hotels_agent', 'call_places_agent', 'estimate_trip_cost']\nActual: ['extract_travel', 'flights', 'hotels', 'estimate_trip_cost']\nResult: FAILED. Missing required tools: ['call_hotels_agent', 'call_places_agent', 'call_flights_agent']. Extra tools used: ['flights', 'hotels']."
+      }
+    },
+    {
+      "scenario_id": "S03_multi_city_three_legs",
+      "error": "Error code: 413 - {'error': {'code': 'tokens_limit_reached', 'message': 'Request body too large for gpt-4o-mini model. Max size: 8000 tokens.', 'details': 'Request body too large for gpt-4o-mini model. Max size: 8000 tokens.'}}",
+      "scores": {
+        "correctness": 0,
+        "faithfulness": 0,
+        "trajectory_match": 0
+      }
+    },
+    {
+      "scenario_id": "S04_tight_budget",
+      "duration_seconds": 34.76,
+      "scores": {
+        "correctness": 1,
+        "faithfulness": 0.67,
+        "trajectory_match": 0
+      },
+      "reasoning": {
+        "correctness_rationale": "SCORE: 1  \nREASONING: The response includes the correct destination (Lisbon), the specified travel dates (2026-05-03 to 2026-05-08), a hotel recommendation (Independente Principe Real), a flight option (TAP Air Portugal with a specified departure and arrival time), and a budget verdict indicating that the total estimated cost is within the user's budget of $450. All required elements are present and accurate.",
+        "faithfulness_rationale": "Raw Score: 2/3\nSCORE: 2  \nREASONING: The itinerary is mostly grounded in real data, with the flights and hotel accurately reflecting the tool outputs. The flight details for TAP Air Portugal, including departure and arrival times, are consistent with the tool outputs. The hotel, Independente Principe Real, is also correctly listed with the right pricing. However, there is a minor discrepancy in the hotel cost conversion; the hotel price is stated as approximately $125, which does not match the exact conversion of \u20ac115 to USD (which would be around $125.50 depending on the exchange rate). Additionally, the estimated activities cost of $50 is not supported by the tool outputs, which do not provide any specific activity costs. Therefore, while the core items are grounded, the discrepancies in the hotel cost and unsupported activities lead to a score of 2.",
+        "trajectory_match_rationale": "Mode: subset\nExpected: ['extract_travel', 'call_flights_agent', 'call_hotels_agent', 'call_places_agent', 'estimate_trip_cost']\nActual: ['extract_travel', 'flights', 'hotels', 'estimate_trip_cost']\nResult: FAILED. Missing required tools: ['call_hotels_agent', 'call_places_agent', 'call_flights_agent']. Extra tools used: ['flights', 'hotels']."
+      }
+    },
+    {
+      "scenario_id": "S05_generous_budget",
+      "duration_seconds": 65.59,
+      "scores": {
+        "correctness": 1,
+        "faithfulness": 0.67,
+        "trajectory_match": 0
+      },
+      "reasoning": {
+        "correctness_rationale": "SCORE: 1  \nREASONING: The response correctly includes the right destination (Tokyo), the correct travel dates (2026-09-15 to 2026-09-23), a hotel recommendation (Edo Sakura), a flight option (EVA Air with specified departure and arrival times), and a budget verdict indicating that the total estimated cost is within the user's budget of $9000. All required elements are present and accurate, fulfilling the user's request comprehensively.",
+        "faithfulness_rationale": "Raw Score: 2/3\nSCORE: 2  \nREASONING: The itinerary is mostly grounded in real data, with all major components (flights, hotel, and attractions) accurately represented. However, there is a minor discrepancy in the flight pricing. The total flight cost is stated as $1901.76, which is consistent with the individual flight prices provided, but the agent's final response lists the price per adult as $950.88, which does not match the total flight cost of $1901.76 when calculated for two adults. This inconsistency in the flight pricing is a minor discrepancy, but the core items (flights, hotel, and attractions) are all valid and traceable to the tool outputs.",
+        "trajectory_match_rationale": "Mode: subset\nExpected: ['extract_travel', 'call_flights_agent', 'call_hotels_agent', 'call_places_agent', 'estimate_trip_cost']\nActual: ['extract_travel', 'flights', 'hotels', 'estimate_trip_cost', 'places']\nResult: FAILED. Missing required tools: ['call_hotels_agent', 'call_places_agent', 'call_flights_agent']. Extra tools used: ['flights', 'hotels', 'places']."
+      }
+    }
+  ]
+}
