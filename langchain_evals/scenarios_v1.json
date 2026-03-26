@@ -4,9 +4,9 @@
     "prompt": "Plan a trip from Paris to Barcelona from 2026-06-01 to 2026-06-05 for 1 adult with a budget of $1200.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -15,9 +15,9 @@
     "prompt": "I want to travel from London to Rome from 2026-07-10 to 2026-07-16 with 2 adults and 2 children, budget is $3500.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -26,9 +26,9 @@
     "prompt": "Plan a 3-city trip: depart from Paris, go to Rome, then Barcelona, then return to Paris from 2026-08-01 to 2026-08-12. Budget is $2800 for 1 adult.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -37,9 +37,9 @@
     "prompt": "Need a very cheap trip from Berlin to Lisbon from 2026-05-03 to 2026-05-08 for 1 adult, budget only $450.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -48,9 +48,9 @@
     "prompt": "Plan from New York to Tokyo from 2026-09-15 to 2026-09-23 for 2 adults, budget is $9000.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -59,9 +59,9 @@
     "prompt": "Plan a trip from Madrid to Prague from 2026-06-18 to 2026-06-22 for 1 adult.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -78,9 +78,9 @@
     "prompt": "Can you plan my trip from Paris to Athens next Friday for 4 days, budget 1200 dollars?",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -89,9 +89,9 @@
     "prompt": "Plan travel from Brussels to Amsterdam from 2026-04-10 to 2026-04-13 for 1 adult and budget $700.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -100,9 +100,9 @@
     "prompt": "Plan from Paris to Istanbul for dates 2026-07-01 to 2026-07-08 with 2 adults, 1 child, 1 infant, and budget $3200.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -111,9 +111,9 @@
     "prompt": "Business trip from Frankfurt to Zurich, 2026-10-02 to 2026-10-04, one traveler, budget $1000.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -122,9 +122,9 @@
     "prompt": "I want to go from Los Angeles to Paris from 2026-12-20 to 2026-12-28 with a budget of $2500.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -133,9 +133,9 @@
     "prompt": "Weekend city break from Milan to Budapest, 2026-03-13 to 2026-03-16, budget $900.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -144,9 +144,9 @@
     "prompt": "Plan from Dublin to Lisbon from 2026-08-14 to 2026-08-20 for 4 adults, budget $4200.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -155,9 +155,9 @@
     "prompt": "Hey, I might maybe go from Cairo to Madrid around 2026-11-03 and back 2026-11-09, not sure about fancy hotels, budget around 1400 for me.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -166,9 +166,9 @@
     "prompt": "I want a luxury honeymoon from Toronto to Maldives from 2026-06-05 to 2026-06-12 but budget is only $1800.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -177,9 +177,9 @@
     "prompt": "Travel from Paris to Rome on 2026-05-01, then from Rome to Athens on 2026-05-05, and return to Paris from Athens on 2026-05-09. Budget 2000 USD.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -196,9 +196,9 @@
     "prompt": "Backpacking from Mexico City to Lima from 2026-04-01 to 2026-04-12, super low budget 800 dollars.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   },
@@ -207,9 +207,9 @@
     "prompt": "Family trip from Sydney to Bali from 2026-01-08 to 2026-01-16 for 2 adults and 3 children, budget $5000.",
     "expected_tools": [
       "extract_travel",
-      "call_flights_agent",
-      "call_hotels_agent",
-      "call_places_agent",
+      "flights",
+      "hotels",
+      "places",
       "estimate_trip_cost"
     ]
   }
