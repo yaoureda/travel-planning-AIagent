@@ -64,12 +64,12 @@ def fill_template():
     budget = st.text_input("Budget...")
     number_of_travelers = st.text_input("Number of travelers...")
     if st.button("Submit"):
-        st.rerun()
-        send_request(
+        st.session_state.pending_template_request = (
             f"Plan a trip from {origine if origine else 'N/A'} to {destination if destination else 'N/A'} departing on {departure_date if departure_date else 'N/A'} and returning on {return_date if return_date else 'N/A'}. "
             f"The trip duration is {duraation if duraation else 'N/A'} and the budget is {budget if budget else 'N/A'}. "
             f"There are {number_of_travelers if number_of_travelers else 'N/A'} travelers."
         )
+        st.rerun()
 
 with st.sidebar:
     if st.button("Use Template"):
@@ -77,3 +77,8 @@ with st.sidebar:
 
 if user_input:
     send_request(user_input)
+
+if "pending_template_request" in st.session_state:
+    req = st.session_state.pending_template_request
+    del st.session_state.pending_template_request
+    send_request(req)
