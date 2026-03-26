@@ -2,144 +2,215 @@
   {
     "id": "S01_single_city_baseline",
     "prompt": "Plan a trip from Paris to Barcelona from 2026-06-01 to 2026-06-05 for 1 adult with a budget of $1200.",
-    "tags": ["baseline", "single-city", "budget"],
-    "must_include_any": [["flight", "transport"], ["hotel", "accommodation"], ["place", "attraction", "visit"], ["budget"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S02_single_city_family",
     "prompt": "I want to travel from London to Rome from 2026-07-10 to 2026-07-16 with 2 adults and 2 children, budget is $3500.",
-    "tags": ["family", "single-city"],
-    "must_include_any": [["flight", "transport"], ["hotel"], ["budget"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S03_multi_city_three_legs",
     "prompt": "Plan a 3-city trip: depart from Paris, go to Rome, then Barcelona, then return to Paris from 2026-08-01 to 2026-08-12. Budget is $2800 for 1 adult.",
-    "tags": ["multi-city", "multi-leg"],
-    "must_include_any": [["rome"], ["barcelona"], ["flight", "one-way", "leg"], ["budget"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S04_tight_budget",
     "prompt": "Need a very cheap trip from Berlin to Lisbon from 2026-05-03 to 2026-05-08 for 1 adult, budget only $450.",
-    "tags": ["tight-budget"],
-    "must_include_any": [["budget"], ["recommend"], ["hotel"], ["flight", "transport"]],
-    "budget_expectation": "over"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S05_generous_budget",
     "prompt": "Plan from New York to Tokyo from 2026-09-15 to 2026-09-23 for 2 adults, budget is $9000.",
-    "tags": ["long-haul", "high-budget"],
-    "must_include_any": [["tokyo"], ["budget"], ["hotel"], ["flight"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S06_missing_budget",
     "prompt": "Plan a trip from Madrid to Prague from 2026-06-18 to 2026-06-22 for 1 adult.",
-    "tags": ["missing-info", "clarification"],
-    "must_include_any": [["budget"], ["flight", "transport"], ["hotel"]],
-    "expect_clarification": true,
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S07_missing_origin",
     "prompt": "I want to visit Vienna from 2026-06-10 to 2026-06-15 with a budget of $1500.",
-    "tags": ["missing-info", "clarification"],
-    "must_include_any": [["origin", "departure city", "where are you traveling from"], ["budget"]],
     "expect_clarification": true,
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel"
+    ]
   },
   {
     "id": "S08_ambiguous_dates",
     "prompt": "Can you plan my trip from Paris to Athens next Friday for 4 days, budget 1200 dollars?",
-    "tags": ["ambiguous-date"],
-    "must_include_any": [["athens"], ["budget"], ["flight", "transport"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S09_train_likely_short_distance",
     "prompt": "Plan travel from Brussels to Amsterdam from 2026-04-10 to 2026-04-13 for 1 adult and budget $700.",
-    "tags": ["short-distance", "transport-choice"],
-    "must_include_any": [["train", "transport", "flight"], ["budget"], ["hotel"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S10_children_and_infant",
     "prompt": "Plan from Paris to Istanbul for dates 2026-07-01 to 2026-07-08 with 2 adults, 1 child, 1 infant, and budget $3200.",
-    "tags": ["traveler-mix"],
-    "must_include_any": [["2 adults"], ["child", "children"], ["infant"], ["budget"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S11_business_trip_short",
     "prompt": "Business trip from Frankfurt to Zurich, 2026-10-02 to 2026-10-04, one traveler, budget $1000.",
-    "tags": ["business", "short-trip"],
-    "must_include_any": [["zurich"], ["flight", "transport"], ["hotel"], ["budget"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S12_peak_season",
     "prompt": "I want to go from Los Angeles to Paris from 2026-12-20 to 2026-12-28 with a budget of $2500.",
-    "tags": ["peak-season", "long-haul"],
-    "must_include_any": [["paris"], ["budget"], ["hotel"], ["flight"]],
-    "budget_expectation": "over"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S13_city_break",
     "prompt": "Weekend city break from Milan to Budapest, 2026-03-13 to 2026-03-16, budget $900.",
-    "tags": ["city-break"],
-    "must_include_any": [["budapest"], ["hotel"], ["budget"], ["place", "attraction"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S14_group_trip",
     "prompt": "Plan from Dublin to Lisbon from 2026-08-14 to 2026-08-20 for 4 adults, budget $4200.",
-    "tags": ["group", "single-city"],
-    "must_include_any": [["4"], ["hotel"], ["flight", "transport"], ["budget"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S15_noisy_prompt",
     "prompt": "Hey, I might maybe go from Cairo to Madrid around 2026-11-03 and back 2026-11-09, not sure about fancy hotels, budget around 1400 for me.",
-    "tags": ["noisy-input", "robustness"],
-    "must_include_any": [["madrid"], ["budget"], ["hotel"], ["flight", "transport"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S16_luxury_conflict_low_budget",
     "prompt": "I want a luxury honeymoon from Toronto to Maldives from 2026-06-05 to 2026-06-12 but budget is only $1800.",
-    "tags": ["conflicting-constraints"],
-    "must_include_any": [["budget"], ["recommend"], ["hotel"], ["flight"]],
-    "budget_expectation": "over"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S17_open_jaw",
     "prompt": "Travel from Paris to Rome on 2026-05-01, then from Rome to Athens on 2026-05-05, and return to Paris from Athens on 2026-05-09. Budget 2000 USD.",
-    "tags": ["open-jaw", "multi-leg"],
-    "must_include_any": [["rome"], ["athens"], ["budget"], ["flight", "leg"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S18_missing_return_date",
     "prompt": "Plan a trip from Seoul to Bangkok departing 2026-09-10 for 1 adult with budget $1300.",
-    "tags": ["missing-info", "clarification"],
-    "must_include_any": [["return"], ["budget"], ["flight", "transport"]],
     "expect_clarification": true,
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel"
+    ]
   },
   {
     "id": "S19_solo_backpacking",
     "prompt": "Backpacking from Mexico City to Lima from 2026-04-01 to 2026-04-12, super low budget 800 dollars.",
-    "tags": ["budget", "solo"],
-    "must_include_any": [["lima"], ["budget"], ["hotel", "accommodation"], ["flight", "transport"]],
-    "budget_expectation": "over"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   },
   {
     "id": "S20_family_summer_trip",
     "prompt": "Family trip from Sydney to Bali from 2026-01-08 to 2026-01-16 for 2 adults and 3 children, budget $5000.",
-    "tags": ["family", "seasonal"],
-    "must_include_any": [["bali"], ["children"], ["hotel"], ["budget"]],
-    "budget_expectation": "mention"
+    "expected_tools": [
+      "extract_travel",
+      "call_flights_agent",
+      "call_hotels_agent",
+      "call_places_agent",
+      "estimate_trip_cost"
+    ]
   }
 ]

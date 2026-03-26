@@ -78,6 +78,49 @@ pytest
 
 ---
 
+## Benchmark Evaluation
+
+This repository now includes an end-to-end evaluation harness in `evals/` to measure planner quality across curated scenarios.
+
+### What it evaluates
+
+- Itinerary correctness (field-level constraint and consistency checks)
+- Tool call reliability (usable result rate from captured tool traces)
+- Hallucination rate (unsupported claims vs tool outputs from the same run)
+
+### Scenario set
+
+- Default suite: `evals/scenarios_v1.json`
+- Count: 20 scenarios (single-city, multi-city, family, tight budget, ambiguous/missing fields)
+
+### Run benchmark
+
+```bash
+python -m evals.runner
+```
+
+### Run a quick subset
+
+```bash
+python -m evals.runner --limit 5
+```
+
+### Output artifacts
+
+Each run writes two files to `evals/results/`:
+
+- `benchmark_<timestamp>.json` (raw per-scenario outputs + scores)
+- `benchmark_<timestamp>.md` (human-readable report)
+
+The JSON artifact includes captured tool calls and extracted response claims for metric traceability.
+
+### Notes
+
+- The benchmark invokes live LLM/API calls through the planner agent.
+- Ensure environment variables in `.env` are configured before running.
+
+---
+
 ## Project structure
 
 ```
